@@ -1,5 +1,6 @@
 # Dependencias
 Instalar las siguientes dependecias:
+- npm install
 - npm i express
 - npm i cors
 - npm i nodemon -D
