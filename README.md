@@ -8,3 +8,10 @@ Instalar las siguientes dependecias:
 - npm i dotenv -save
 
 # .env
+- PORT = 4000
+- HOST_DB = localhost
+- PORT_DB = 3306
+- USER_DB = root
+- PASSWORD_DB = ALANHUEVOs18
+- NAME_DB = resiliente
+Cambiar a sus necesidades
