@@ -11,15 +11,15 @@ const connection = mysql.createConnection({
 connection.connect(error => {
     if (error)
         throw error;
-    console.log('La conexión con usuarios si funciona');
+    console.log('La conexión con comentarios si funciona');
 });
 
-// GETALL
-const getAllUsuarios = async() => {
+//GETALL
+const getAllComentarios = async() => {
     return new Promise(function (resolve, reject) {
-        const sql = 'SELECT * FROM usuarios';
+        const sql = 'SELECT * FROM comentarios';
         connection.query(sql, (error, results) => {
-            if(error) {
+            if(error){
                 return reject(error);
             }
             resolve(results);
@@ -28,9 +28,9 @@ const getAllUsuarios = async() => {
 };
 
 // GETONE
-const getOneUsuario = async(id) => {
+const getOneComentario = async(id) => {
     return new Promise(function (resolve, reject) {
-        const sql = 'SELECT * FROM usuarios WHERE id = ? ';
+        const sql = 'SELECT * FROM comentarios WHERE id = ?';
         connection.query(sql, [id], (error, results) => {
             if(error) {
                 return reject(error);
@@ -41,48 +41,48 @@ const getOneUsuario = async(id) => {
 };
 
 // POST
-const createUsuario = async(correo, passw, userName) => {
+const createComentario = async(contenido, autor, fecha) => {
     return new Promise(function (resolve, reject) {
-        const sql = "INSERT INTO usuarios (correo, passw, userName) VALUES (?, ?, ?)";
-        connection.query(sql, [correo, passw, userName], (error, results) => {
+        const sql = "INSERT INTO comentarios (contenido, autor, fecha) VALUES (?, ?, ?)";
+        connection.query(sql, [contenido, autor, fecha], (error, results) =>{
             if(error) {
                 return reject(error);
             }
-            resolve("Usuario agregadoo");
+            resolve("Comentario agregado");
         });
     });
 };
 
 // PATCH
-const updateUsuario = async(correo, passw, userName, id) => {
+const updateComentario = async(contenido, autor, fecha, id) => {
     return new Promise(function (resolve, reject) {
-        const sql = "UPDATE usuarios SET correo = ?, passw = ?, userName = ? WHERE id = ?";
-        connection.query(sql, [correo, passw, userName, id], (error, results) => {
+        const sql = "UPDATE comentarios SET contenido = ?, autor = ?, fecha = ? WHERE id = ?";
+        connection.query(sql, [contenido, autor, fecha, id], (error, results) => {
             if (error) {
                 return reject(error);
             }
-            resolve("Usuario actualizado");
+            resolve("Comentario actualizado");
         });
     });
-}
+};
 
 // DELETE
-const deleteUsuario = async(id) => {
+const deleteComentario = async(id) => {
     return new Promise(function (resolve, reject) {
-        const sql ="DELETE FROM usuarios WHERE id = ?";
+        const sql = "DELETE FROM comentarios WHERE id = ?";
         connection.query(sql, [id], (error, results) => {
             if(error) {
                 return reject(error);
             }
-            resolve("Usuario eliminado");
+            resolve("Comentario eliminado");
         });
     });
 };
 
 module.exports = {
-    getAllUsuarios,
-    getOneUsuario,
-    createUsuario,
-    updateUsuario,
-    deleteUsuario
+    getAllComentarios,
+    getOneComentario,
+    createComentario,
+    updateComentario,
+    deleteComentario
 };
