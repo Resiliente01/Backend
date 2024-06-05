@@ -44,7 +44,7 @@ const getOneUsuario = async(id) => {
 const createUsuario = async(correo, passw, userName) => {
     return new Promise(function (resolve, reject) {
         const sql = "INSERT INTO usuarios (correo, passw, userName) VALUES (?, ?, ?)";
-        connection.query(sql, [correo, passw, userName], (error, results) => {
+        connection.query(sql, [correo, passw, userName], (error) => {
             if(error) {
                 return reject(error);
             }
@@ -57,7 +57,7 @@ const createUsuario = async(correo, passw, userName) => {
 const updateUsuario = async(correo, passw, userName, id) => {
     return new Promise(function (resolve, reject) {
         const sql = "UPDATE usuarios SET correo = ?, passw = ?, userName = ? WHERE id = ?";
-        connection.query(sql, [correo, passw, userName, id], (error, results) => {
+        connection.query(sql, [correo, passw, userName, id], (error) => {
             if (error) {
                 return reject(error);
             }
@@ -70,7 +70,7 @@ const updateUsuario = async(correo, passw, userName, id) => {
 const deleteUsuario = async(id) => {
     return new Promise(function (resolve, reject) {
         const sql ="DELETE FROM usuarios WHERE id = ?";
-        connection.query(sql, [id], (error, results) => {
+        connection.query(sql, [id], (error) => {
             if(error) {
                 return reject(error);
             }

@@ -44,7 +44,7 @@ const getOneCita = async (id) => {
 const createCita = async (userName, fecha) => {
     return new Promise(function (resolve, reject) {
         const sql = "INSERT INTO citas (userName, fecha) VALUES (?, ?)";
-        connection.query(sql, [userName, fecha], (error, results) => {
+        connection.query(sql, [userName, fecha], (error) => {
             if (error) {
                 return reject(error);
             }
@@ -57,7 +57,7 @@ const createCita = async (userName, fecha) => {
 const updateCita = async(userName, fecha, id) => {
     return new Promise(function (resolve, reject) {
         const sql = "UPDATE citas SET userName = ?, fecha = ? WHERE id = ?";
-        connection.query(sql, [userName, fecha, id], (error, results) => {
+        connection.query(sql, [userName, fecha, id], (error) => {
             if(error) {
                 return reject(error);
             }
@@ -70,7 +70,7 @@ const updateCita = async(userName, fecha, id) => {
 const deleteCita = async(id) => {
     return new Promise(function (resolve, reject) {
         const sql = "DELETE FROM citas WHERE id = ?";
-        connection.query(sql, [id], (error, results) => {
+        connection.query(sql, [id], (error) => {
             if(error) {
                 return reject(error);
             }

@@ -44,7 +44,7 @@ const getOneComentario = async(id) => {
 const createComentario = async(contenido, autor, fecha) => {
     return new Promise(function (resolve, reject) {
         const sql = "INSERT INTO comentarios (contenido, autor, fecha) VALUES (?, ?, ?)";
-        connection.query(sql, [contenido, autor, fecha], (error, results) =>{
+        connection.query(sql, [contenido, autor, fecha], (error) =>{
             if(error) {
                 return reject(error);
             }
@@ -57,7 +57,7 @@ const createComentario = async(contenido, autor, fecha) => {
 const updateComentario = async(contenido, autor, fecha, id) => {
     return new Promise(function (resolve, reject) {
         const sql = "UPDATE comentarios SET contenido = ?, autor = ?, fecha = ? WHERE id = ?";
-        connection.query(sql, [contenido, autor, fecha, id], (error, results) => {
+        connection.query(sql, [contenido, autor, fecha, id], (error) => {
             if (error) {
                 return reject(error);
             }
@@ -70,7 +70,7 @@ const updateComentario = async(contenido, autor, fecha, id) => {
 const deleteComentario = async(id) => {
     return new Promise(function (resolve, reject) {
         const sql = "DELETE FROM comentarios WHERE id = ?";
-        connection.query(sql, [id], (error, results) => {
+        connection.query(sql, [id], (error) => {
             if(error) {
                 return reject(error);
             }
