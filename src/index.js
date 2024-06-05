@@ -7,6 +7,7 @@ const cors = require('cors');
 const v1Usuario = require('./v1/routes/usuarioRoutes');
 const v1Comentario = require('./v1/routes/comentarioRoutes');
 const v1Cita = require('./v1/routes/citaRoutes');
+const v1Blog = require('./v1/routes/blogRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use("/api/v1/usuario", v1Usuario);
 app.use("/api/v1/comentario", v1Comentario);
 app.use("/api/v1/cita", v1Cita);
+app.use("/api/v1/blog", v1Blog)
 
 app.listen(PORT, () => {
     console.log(`Escuchando en el puerto ${PORT} ヽ(•‿•)ノ`);
