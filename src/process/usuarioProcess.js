@@ -25,10 +25,22 @@ const deleteUsuario = async(id) => {
     return usuarios;
 };
 
+const loginProcess = async(correo, passw) => {
+    const usuarios = await usuarioService.loginProcess(correo, passw); 
+    return usuarios; 
+}; 
+
+const checkEmail = async(correo) => {
+    const usuarios = await usuarioService.checkEmail(correo); 
+    return usuarios; 
+};
+
 module.exports = {
     getAllUsuarios,
     getOneUsuario,
     createUsuario,
     updateUsuario,
-    deleteUsuario
+    deleteUsuario,
+    loginProcess, 
+    checkEmail
 };

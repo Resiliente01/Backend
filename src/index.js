@@ -20,5 +20,5 @@ app.use("/api/v1/cita", v1Cita);
 app.use("/api/v1/blog", v1Blog)
 
 app.listen(PORT, () => {
-    console.log(`Escuchando en el puerto ${PORT} ヽ(•‿•)ノ`);
+    console.log(`Escuchando en el puerto ${PORT} ヽ(•‿ •)ノ`);
 })

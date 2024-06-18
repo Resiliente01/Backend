@@ -8,5 +8,7 @@ router
     .post('/', usuarioController.createUsuario)
     .patch('/:id', usuarioController.updateUsuario)
     .delete('/:id', usuarioController.deleteUsuario)
+    .patch('/login', usuarioController.loginProcess)
+    .patch('/email', usuarioController.checkEmail)
 
 module.exports = router;

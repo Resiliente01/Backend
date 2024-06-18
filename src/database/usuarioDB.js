@@ -79,10 +79,37 @@ const deleteUsuario = async(id) => {
     });
 };
 
+//login process 
+const loginProcess = async(correo, passw) => {
+    return new Promise(function(resolve, reject) {
+        const sql = "Select from usuarios where correo = ? and passw = ?"; 
+        connection.query(sql, [correo, passw], (error, results) => {
+            if(error){
+                return reject(error); 
+            }
+            resolve(results); 
+        }); 
+    }); 
+}; 
+
+const checkEmail = async(correo) => {
+    return new Promise(function(resolve, reject){
+        const sql = "Select * from usuarios where correo = ? ";
+        connection.query(sql, [correo], (error, results) => {
+            if(error){
+                return reject(error); 
+            }
+            resolve(results); 
+        }); 
+    }); 
+}; 
+
 module.exports = {
     getAllUsuarios,
     getOneUsuario,
     createUsuario,
     updateUsuario,
-    deleteUsuario
+    deleteUsuario, 
+    loginProcess, 
+    checkEmail
 };

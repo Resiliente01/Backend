@@ -25,10 +25,38 @@ const deleteUsuario = async(req, res) => {
     res.send(usuarios);
 };
 
+// Proceso de logeo
+const loginProcess = async (correo, passw) => {
+    return new Promise(function (resolve, reject) {
+        const sql = "SELECT * FROM usuarios WHERE correo = ? AND passw = ?";
+        connection.query(sql, [correo, passw], (error, results) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(results);
+        });
+    });
+};
+
+// Proceso de verificar email
+const checkEmail = async (correo) => {
+    return new Promise(function (resolve, reject) {
+        const sql = "SELECT correo FROM usuarios WHERE correo = ?";
+        connection.query(sql, [correo], (error, results) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(results);
+        });
+    });
+};
+
 module.exports = {
     getAllUsuarios,
     getOneUsuario,
     createUsuario,
     updateUsuario,
-    deleteUsuario
+    deleteUsuario, 
+    loginProcess, 
+    checkEmail
 };
