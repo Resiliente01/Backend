@@ -10,13 +10,13 @@ const getOneCita = async(id) => {
     return citas;
 };
 
-const createCita = async(userName, fecha) => {
-    const citas = await citaService.createCita(userName, fecha);
+const createCita = async( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti) => {
+    const citas = await citaService.createCita( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti);
     return citas;
 };
 
-const updateCita = async(userName, fecha, id) => {
-    const citas = await citaService.updateCita(userName, fecha, id);
+const updateCita = async( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, id) => {
+    const citas = await citaService.updateCita( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, id);
     return citas;
 };
 
@@ -25,10 +25,16 @@ const deleteCita = async(id) => {
     return citas;
 };
 
+const disponibilidad = async(horario, fecha) => {
+    const citas = await citaService.disponibilidad(horario, fecha); 
+    return citas; 
+}; 
+
 module.exports = {
     getAllCitas,
     getOneCita,
     createCita,
     updateCita,
-    deleteCita
+    deleteCita, 
+    disponibilidad
 };

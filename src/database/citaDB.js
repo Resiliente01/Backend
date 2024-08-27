@@ -1,50 +1,45 @@
-const mysql = require('mysql2');
+const { Pool } = require('pg');
 
-const connection = mysql.createConnection({
-    host: process.env.HOST_DB,
-    port: process.env.PORT_DB,
-    user: process.env.USER_DB,
-    password: process.env.PASSWORD_DB,
-    database: process.env.NAME_DB
+const pool = new Pool({
+    connectionString: 'postgres://postgres:t5tOS5ZS2r8866g@resilientedb.flycast:5432'
 });
 
-connection.connect(error => {
-    if (error)
-        throw error;
-    console.log('La conexión con citas si funciona');
-});
+pool.connect()
+    .then(() => console.log('Conexión exitosa con cita'))
+    .catch(err => console.error('Error al conectar con PostgreSQL', err));
+
 
 // GETALL
 const getAllCitas = async () => {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         const sql = 'SELECT * FROM citas';
-        connection.query(sql, (error, results) => {
+        pool.query(sql, (error, results) => {
             if (error) {
                 return reject(error);
             }
-            resolve(results);
+            resolve(results.rows);
         });
     });
 };
 
 // GETONE
 const getOneCita = async (id) => {
-    return new Promise(function (resolve, reject) {
-        const sql = 'SELECT * FROM citas WHERE id = ?';
-        connection.query(sql, [id], (error, results) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM citas WHERE id = $1';
+        pool.query(sql, [id], (error, results) => {
             if (error) {
                 return reject(error);
             }
-            resolve(results);
+            resolve(results.rows);
         });
     });
 };
 
 // POST
-const createCita = async (userName, fecha) => {
-    return new Promise(function (resolve, reject) {
-        const sql = "INSERT INTO citas (userName, fecha) VALUES (?, ?)";
-        connection.query(sql, [userName, fecha], (error) => {
+const createCita = async ( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti) => {
+    return new Promise((resolve, reject) => {
+        const sql = "INSERT INTO citas ( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,)";
+        pool.query(sql, [ nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti], (error) => {
             if (error) {
                 return reject(error);
             }
@@ -54,24 +49,24 @@ const createCita = async (userName, fecha) => {
 };
 
 // PATCH
-const updateCita = async(userName, fecha, id) => {
-    return new Promise(function (resolve, reject) {
-        const sql = "UPDATE citas SET userName = ?, fecha = ? WHERE id = ?";
-        connection.query(sql, [userName, fecha, id], (error) => {
-            if(error) {
+const updateCita = async ( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, id) => {
+    return new Promise((resolve, reject) => {
+        const sql = "UPDATE citas SET nombrecompleto = $1, correo = $2, telefono = $3, tipocita = $4, fecha = $5, horario = $6, psicologo = $7, cuentanosdeti = $8 WHERE id = $9";
+        pool.query(sql, [ nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, id], (error) => {
+            if (error) {
                 return reject(error);
             }
-            resolve("Cita actuializada");
+            resolve("Cita actualizada");
         });
     });
 };
 
 // DELETE
-const deleteCita = async(id) => {
-    return new Promise(function (resolve, reject) {
-        const sql = "DELETE FROM citas WHERE id = ?";
-        connection.query(sql, [id], (error) => {
-            if(error) {
+const deleteCita = async (id) => {
+    return new Promise((resolve, reject) => {
+        const sql = "DELETE FROM citas WHERE id = $1";
+        pool.query(sql, [id], (error) => {
+            if (error) {
                 return reject(error);
             }
             resolve("Cita eliminada");
@@ -79,10 +74,24 @@ const deleteCita = async(id) => {
     });
 };
 
+const disponibilidad = async (fecha, hora) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'Select * from citas where fecha = $1 and hora = $2'; 
+        pool.query(sql, [fecha, hora], (error) => {
+            if (error) {
+                return reject(error); 
+            }
+            resolve('Cita existente'); 
+        });
+    }); 
+}
+
+
 module.exports = {
     getAllCitas,
     getOneCita,
     createCita,
     updateCita,
-    deleteCita
+    deleteCita, 
+    disponibilidad
 };

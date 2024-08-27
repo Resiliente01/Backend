@@ -1,18 +1,17 @@
 const { Pool } = require('pg');
 
-const pool = new Pool({    
+const pool = new Pool({
     connectionString: 'postgres://postgres:t5tOS5ZS2r8866g@resilientedb.flycast:5432'
 });
 
 pool.connect()
-    .then(() => console.log('Conexión exitosa con comentario'))
+    .then(() => console.log('Conexión exitosa con psicologo'))
     .catch(err => console.error('Error al conectar con PostgreSQL', err));
 
-
-// GETALL
-const getAllComentarios = async () => {
+// getall 
+const getAllPsicologo = async () => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM comentarios';
+        const sql = 'SELECT * FROM psicologo';
         pool.query(sql, (error, results) => {
             if (error) {
                 return reject(error);
@@ -23,9 +22,9 @@ const getAllComentarios = async () => {
 };
 
 // GETONE
-const getOneComentario = async (id) => {
+const getOnePsicologo = async (id) => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM comentarios WHERE id = $1';
+        const sql = 'SELECT * FROM psicologo WHERE id = $1';
         pool.query(sql, [id], (error, results) => {
             if (error) {
                 return reject(error);
@@ -36,48 +35,48 @@ const getOneComentario = async (id) => {
 };
 
 // POST
-const createComentario = async (contenido, autor) => {
+const createPsicologo = async (nombre, especialidad, cedula, visitante) => {
     return new Promise((resolve, reject) => {
-        const sql = "INSERT INTO comentarios (contenido, autor) VALUES ($1, $2)";
-        pool.query(sql, [contenido, autor], (error) => {
+        const sql = "INSERT INTO psicologo (nombre, especialidad, cedula, visitante) VALUES ($1, $2, $3, $4)";
+        pool.query(sql, [nombre, especialidad, cedula, visitante ], (error) => {
             if (error) {
                 return reject(error);
             }
-            resolve("Comentario agregado");
+            resolve("Psicologo agregado");
         });
     });
 };
 
 // PATCH
-const updateComentario = async (contenido, autor, id) => {
+const updatePsicologo = async (nombre, especialidad, cedula, visitante, id) => {
     return new Promise((resolve, reject) => {
-        const sql = "UPDATE comentarios SET contenido = $1, autor = $2 WHERE id = $3";
-        pool.query(sql, [contenido, autor, id], (error) => {
+        const sql = "UPDATE psicologo SET nombre = $1, especialidad = $2, cedula = $3, visitante = $4 WHERE id = $5";
+        pool.query(sql, [nombre, especialidad, cedula, visitante, id], (error) => {
             if (error) {
                 return reject(error);
             }
-            resolve("Comentario actualizado");
+            resolve("Psicologo actualizado");
         });
     });
-};
+}
 
 // DELETE
-const deleteComentario = async (id) => {
+const deletePsicologo = async (id) => {
     return new Promise((resolve, reject) => {
-        const sql = "DELETE FROM comentarios WHERE id = $1";
+        const sql = "DELETE FROM psicologo WHERE id = $1";
         pool.query(sql, [id], (error) => {
             if (error) {
                 return reject(error);
             }
-            resolve("Comentario eliminado");
+            resolve("Psicologo eliminado");
         });
     });
 };
 
 module.exports = {
-    getAllComentarios,
-    getOneComentario,
-    createComentario,
-    updateComentario,
-    deleteComentario
-};
+    getAllPsicologo, 
+    getOnePsicologo, 
+    createPsicologo, 
+    updatePsicologo, 
+    deletePsicologo
+}; 

@@ -10,13 +10,13 @@ const getOneUsuario = async(id) => {
     return usuarios;
 };
 
-const createUsuario = async(correo, passw, userName) => {
-    const usuarios = await usuarioDB.createUsuario(correo, passw, userName);
+const createUsuario = async(correo, passw, username) => {
+    const usuarios = await usuarioDB.createUsuario(correo, passw, username);
     return usuarios;
 };
 
-const updateUsuario = async(correo, passw, userName, id) => {
-    const usuarios = await usuarioDB.updateUsuario(correo, passw, userName, id);
+const updateUsuario = async(correo, passw, username, id) => {
+    const usuarios = await usuarioDB.updateUsuario(correo, passw, username, id);
     return usuarios;
 };
 

@@ -1,63 +1,60 @@
-const mysql = require('mysql2');
+const { Pool } = require('pg');
 
-const connection = mysql.createConnection({
-    host: process.env.HOST_DB,
-    port: process.env.PORT_DB,
-    user: process.env.USER_DB,
-    password: process.env.PASSWORD_DB,
-    database: process.env.NAME_DB
+const pool = new Pool({   
+    connectionString: 'postgres://postgres:t5tOS5ZS2r8866g@resilientedb.flycast:5432'
 });
 
-connection.connect(error => {
-    if (error)
-        throw error;
-    console.log('La conexión con usuarios si funciona');
-});
+pool.connect()
+    .then(() => console.log('Conexión exitosa con usuario'))
+    .catch(err => console.error('Error al conectar con PostgreSQL', err));
+
 
 // GETALL
-const getAllUsuarios = async() => {
-    return new Promise(function (resolve, reject) {
+const getAllUsuarios = async () => {    
+    return new Promise((resolve, reject) => {
         const sql = 'SELECT * FROM usuarios';
-        connection.query(sql, (error, results) => {
-            if(error) {
+        pool.query(sql, (error, results) => {
+            if (error) {
+                console.log('Error chistoso nomas de prueba'); 
                 return reject(error);
             }
-            resolve(results);
+            resolve(results.rows);
+            console.log('Mensaje de prueba de que sí pasó'); 
         });
     });
 };
 
 // GETONE
-const getOneUsuario = async(id) => {
-    return new Promise(function (resolve, reject) {
-        const sql = 'SELECT * FROM usuarios WHERE id = ? ';
-        connection.query(sql, [id], (error, results) => {
-            if(error) {
+const getOneUsuario = async (id) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM usuarios WHERE id = $1';
+        pool.query(sql, [id], (error, results) => {
+            if (error) {
                 return reject(error);
             }
-            resolve(results);
+            resolve(results.rows);
         });
     });
 };
 
 // POST
-const createUsuario = async(correo, passw, userName) => {
-    return new Promise(function (resolve, reject) {
-        const sql = "INSERT INTO usuarios (correo, passw, userName) VALUES (?, ?, ?)";
-        connection.query(sql, [correo, passw, userName], (error) => {
-            if(error) {
+const createUsuario = async (correo, passw, username) => {
+    return new Promise((resolve, reject) => {
+        const sql = "INSERT INTO usuarios (correo, passw, username) VALUES ($1, $2, $3)";
+        pool.query(sql, [correo, passw, username], (error) => {
+            if (error) {
                 return reject(error);
             }
-            resolve("Usuario agregadoo");
+            resolve("Usuario agregado");
         });
     });
 };
 
 // PATCH
-const updateUsuario = async(correo, passw, userName, id) => {
-    return new Promise(function (resolve, reject) {
-        const sql = "UPDATE usuarios SET correo = ?, passw = ?, userName = ? WHERE id = ?";
-        connection.query(sql, [correo, passw, userName, id], (error) => {
+const updateUsuario = async (correo, passw, username, id) => {
+    return new Promise((resolve, reject) => {
+        const sql = "UPDATE usuarios SET correo = $1, passw = $2, username = $3 WHERE id = $4";
+        pool.query(sql, [correo, passw, username, id], (error) => {
             if (error) {
                 return reject(error);
             }
@@ -67,11 +64,11 @@ const updateUsuario = async(correo, passw, userName, id) => {
 }
 
 // DELETE
-const deleteUsuario = async(id) => {
-    return new Promise(function (resolve, reject) {
-        const sql ="DELETE FROM usuarios WHERE id = ?";
-        connection.query(sql, [id], (error) => {
-            if(error) {
+const deleteUsuario = async (id) => {
+    return new Promise((resolve, reject) => {
+        const sql = "DELETE FROM usuarios WHERE id = $1";
+        pool.query(sql, [id], (error) => {
+            if (error) {
                 return reject(error);
             }
             resolve("Usuario eliminado");
@@ -80,36 +77,37 @@ const deleteUsuario = async(id) => {
 };
 
 //login process 
-const loginProcess = async(correo, passw) => {
-    return new Promise(function(resolve, reject) {
-        const sql = "Select from usuarios where correo = ? and passw = ?"; 
-        connection.query(sql, [correo, passw], (error, results) => {
-            if(error){
-                return reject(error); 
+const loginProcess = async (correo, passw) => {
+    return new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM usuarios WHERE correo = $1 AND passw = $2";
+        pool.query(sql, [correo, passw], (error, results) => {
+            if (error) {
+                return reject(error);
             }
-            resolve(results); 
-        }); 
-    }); 
-}; 
+            resolve(results.rows);
+        });
+    });
+};
 
-const checkEmail = async(correo) => {
-    return new Promise(function(resolve, reject){
-        const sql = "Select * from usuarios where correo = ? ";
-        connection.query(sql, [correo], (error, results) => {
-            if(error){
-                return reject(error); 
+const checkEmail = async (correo) => {
+    return new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM usuarios WHERE correo = $1";
+        pool.query(sql, [correo], (error, results) => {
+            if (error) {
+                return reject(error);
             }
-            resolve(results); 
-        }); 
-    }); 
-}; 
+            resolve(results.rows);
+        });
+    });
+};
 
 module.exports = {
+    pool, 
     getAllUsuarios,
     getOneUsuario,
     createUsuario,
     updateUsuario,
-    deleteUsuario, 
-    loginProcess, 
+    deleteUsuario,
+    loginProcess,
     checkEmail
 };

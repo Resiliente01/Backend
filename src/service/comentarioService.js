@@ -10,13 +10,13 @@ const getOneComentario = async(id) => {
     return comentarios;
 };
 
-const createComentario = async(contenido, autor, fecha) => {
-    const comentarios = await comentarioDB.createComentario(contenido, autor, fecha);
+const createComentario = async(contenido, autor) => {
+    const comentarios = await comentarioDB.createComentario(contenido, autor);
     return comentarios;
 };
 
-const updateComentario = async(contenido, autor, fecha, id) => {
-    const comentarios = await comentarioDB.updateComentario(contenido, autor, fecha, id);
+const updateComentario = async(contenido, autor, id) => {
+    const comentarios = await comentarioDB.updateComentario(contenido, autor, id);
     return comentarios;
 };
 
