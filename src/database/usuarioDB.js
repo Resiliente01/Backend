@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({   
-    connectionString: 'postgres://postgres:t5tOS5ZS2r8866g@resilientedb.flycast:5432'
+    connectionString: process.env.DATABASE_URL
 });
 
 pool.connect()

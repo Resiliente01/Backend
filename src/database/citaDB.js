@@ -1,7 +1,13 @@
+require('dotenv').config(); 
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    connectionString: 'postgres://postgres:t5tOS5ZS2r8866g@resilientedb.flycast:5432'
+    host: process.env.HOST_DB,
+    port: process.env.PORT_DB,
+    user: process.env.USER_DB,
+    password: process.env.PASSWORD_DB,
+    database: process.env.NAME_DB,
+    connectionString: process.env.DATABASE_URL
 });
 
 pool.connect()
@@ -36,10 +42,10 @@ const getOneCita = async (id) => {
 };
 
 // POST
-const createCita = async ( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti) => {
+const createCita = async ( nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti) => {
     return new Promise((resolve, reject) => {
-        const sql = "INSERT INTO citas ( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,)";
-        pool.query(sql, [ nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti], (error) => {
+        const sql = "INSERT INTO citas ( nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,)";
+        pool.query(sql, [ nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti], (error) => {
             if (error) {
                 return reject(error);
             }
@@ -49,10 +55,10 @@ const createCita = async ( nombrecompleto, correo, telefono, tipocita, fecha, ho
 };
 
 // PATCH
-const updateCita = async ( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, id) => {
+const updateCita = async ( nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti, id) => {
     return new Promise((resolve, reject) => {
-        const sql = "UPDATE citas SET nombrecompleto = $1, correo = $2, telefono = $3, tipocita = $4, fecha = $5, horario = $6, psicologo = $7, cuentanosdeti = $8 WHERE id = $9";
-        pool.query(sql, [ nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, id], (error) => {
+        const sql = "UPDATE citas SET nombrecompleto = $1, correo = $2, telefono = $3, tipocita = $4, modalidad = $5, fecha = $6, horario = $7, psicologo = $8, cuentanosdeti = $9 WHERE id = $10";
+        pool.query(sql, [ nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti, id], (error) => {
             if (error) {
                 return reject(error);
             }

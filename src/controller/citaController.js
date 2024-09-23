@@ -23,8 +23,8 @@ const getOneCita = async(req, res) => {
 
 const createCita = async(req, res) => {
     try{
-        const { nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti } = req.body; 
-        const citas = await citaProcess.createCita(nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti);
+        const { nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti } = req.body; 
+        const citas = await citaProcess.createCita(nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti);
         res.status(200).json(citas); 
     } catch(error){
         console.error('Error al crear una cita', error); 
@@ -34,8 +34,8 @@ const createCita = async(req, res) => {
 
 const updateCita = async(req, res) => {
     try{
-        const { nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti } = req.body;        
-        const citas = await citaProcess.updateCita( nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, req.params.id);
+        const { nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti } = req.body;        
+        const citas = await citaProcess.updateCita( nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti, req.params.id);
         res.status(200).json(citas);         
     } catch(error){
         console.error('Error al editar cita', error); 

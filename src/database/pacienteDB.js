@@ -1,7 +1,13 @@
+require('dotenv').config(); 
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    connectionString: 'postgres://postgres:t5tOS5ZS2r8866g@resilientedb.flycast:5432'
+    host: process.env.HOST_DB,
+    port: process.env.PORT_DB,
+    user: process.env.USER_DB,
+    password: process.env.PASSWORD_DB,
+    database: process.env.NAME_DB,
+    connectionString: process.env.DATABASE_URL
 });
 
 pool.connect()

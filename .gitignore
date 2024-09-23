@@ -12,6 +12,9 @@ const pool = new Pool({
     //connectionString: process.env.DATABASE_URL
 });
 
+
+
+
 // product on
 
 const pool = new Pool({
@@ -25,19 +28,35 @@ const pool = new Pool({
 
 
 PORT = 5432
-HOST_DB = postgresql://backend-resilientepsicologiayconsultoria-dry-field-7144-db.flycast
+HOST_DB = root
 USER_DB = postgres
 PASSWORD_DB = "yW895noplcLNbZh"
-NAME_DB = backend-resilientepsicologiayconsultoria-dry-field-7144-db.flycast:5432/backend_resiliente
-PORT = 4000
+NAME_DB = resiliente
+ 
 
 DATABASE_URL = postgres://postgres:yW895noplcLNbZh@backend-resilientepsicologiayconsultoria-dry-field-7144-db.flycast:5432/backend_resiliente?sslmode=disable
 
 PORT = 5432
 HOST_DB = localhost
 USER_DB = postgres
-PASSWORD_DB = "resiliente2024"
-NAME_DB = resiliente
-PORT = 4000
+PASSWORD_DB = "1414"
+NAME_DB = postgres
+
 
 DATABASE_URL = postgres://postgres:yW895noplcLNbZh@backend-resilientepsicologiayconsultoria-dry-field-7144-db.flycast:5432/backend_resiliente?sslmode=disable
+
+
+const pool = new Pool ({
+    user: 'postgres', 
+    host: 'postgresql://backend-resiliente-restless-sound-5902-db.flycast'
+    database: 'backend-resiliente-restless-sound-5902-db', 
+    password: 'uND90j6GC4plJNv'
+})
+
+
+DATABASE_URL=postgres://backend_resiliente_fly:REziDZQhlZFJtvk@resilienteflydb.flycast:5432/backend_resiliente_fly?sslmode=disable
+
+psql postgres://backend_resiliente_fly:wk2KKJpa0I1A9M@localhost:5432/backend_resiliente_fly
+
+flyctl ssh console -a resilienteflydb  
+psql postgres://backend_resiliente_fly:wk2KKJpa0I1A9M@localhost:5432/backend_resiliente_fly

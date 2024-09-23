@@ -26,18 +26,24 @@ app.use("/api/v1/psicologo", v1Psicologo);
 app.use("/api/v1/paciente", v1Paciente); 
 app.use("/api/v1/colab", v1Colabs); 
 
+const client = new Client({
+    connectionString: process.env.DATABASE_URL
+});
+
 app.get('/', (req, res) => {
     res.send("Backend encendido ");
 });
 
-app.get('/ping', async (req, res) => {
-    const client = new Client({
-        connectionString: process.env.DATABASE_URL
-    });
+app.get('/dbinfo', async (req, res) => {
+    const result = await pool.query('SELECT current_database(), current_schema()');
+    console.log(`Conectado a la base de datos: ${result.rows[0].current_database}, esquema: ${result.rows[0].current_schema}`);
+    res.send(`Conectado a la base de datos: ${result.rows[0].current_database}, esquema: ${result.rows[0].current_schema}`);
+});
 
+app.get('/ping', async (req, res) => {
     try {
-        await client.connect();
         const result = await client.query("SELECT $1::text as message", ['BD conectada']);
+        console.log('Database URL:', process.env.DATABASE_URL);
         console.log(result.rows[0].message);
         res.json(result.rows[0]);        
     } catch (error) {
@@ -47,8 +53,6 @@ app.get('/ping', async (req, res) => {
         await client.end();
     }
 });
-
-
 
 // Middleware para capturar errores en rutas no definidas
 app.use((req, res, next) => {
@@ -61,6 +65,8 @@ app.use((err, req, res, next) => {
     res.status(500).send('Error interno del servidor');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT,  () => {
     console.log(`Escuchando en el puerto ${PORT} ヽ(•‿ •)ノ`);
 });
+
+

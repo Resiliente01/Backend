@@ -10,13 +10,13 @@ const getOneCita = async(id) => {
     return citas;
 };
 
-const createCita = async(nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti) => {
-    const citas = await citaDB.createCita(nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti);
+const createCita = async(nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti) => {
+    const citas = await citaDB.createCita(nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti);
     return citas;
 };
 
-const updateCita = async(nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, id) => {
-    const citas = await citaDB.updateCita(nombrecompleto, correo, telefono, tipocita, fecha, horario, psicologo, cuentanosdeti, id);
+const updateCita = async(nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti, id) => {
+    const citas = await citaDB.updateCita(nombrecompleto, correo, telefono, tipocita, modalidad, fecha, horario, psicologo, cuentanosdeti, id);
     return citas;
 };
 
